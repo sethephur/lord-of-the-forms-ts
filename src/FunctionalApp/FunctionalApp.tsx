@@ -1,5 +1,5 @@
-import { ProfileInformation } from "../ProfileInformation";
-import { FunctionalForm } from "./FunctionalForm";
+import { ProfileInformation } from '../ProfileInformation';
+import { FunctionalForm } from './FunctionalForm';
 
 export const FunctionalApp = () => {
   return (

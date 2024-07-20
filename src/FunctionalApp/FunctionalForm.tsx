@@ -1,62 +1,96 @@
-import { ErrorMessage } from "../ErrorMessage";
+import { useState } from 'react';
+import { ErrorMessage } from '../ErrorMessage';
+import { TextInput } from '../TextInput';
+import { PhoneInput, PhoneInputState } from '../PhoneInput';
 
-const firstNameErrorMessage = "First name must be at least 2 characters long";
-const lastNameErrorMessage = "Last name must be at least 2 characters long";
-const emailErrorMessage = "Email is Invalid";
-const cityErrorMessage = "State is Invalid";
-const phoneNumberErrorMessage = "Invalid Phone Number";
+const firstNameErrorMessage = 'First name must be at least 2 characters long';
+const lastNameErrorMessage = 'Last name must be at least 2 characters long';
+const emailErrorMessage = 'Email is Invalid';
+const cityErrorMessage = 'State is Invalid';
+const phoneNumberErrorMessage = 'Invalid Phone Number';
 
 export const FunctionalForm = () => {
+  const [firstNameInput, setFirstNameInput] = useState('');
+  const [lastNameInput, setLastNameInput] = useState('');
+  const [emailInput, setEmailInput] = useState('');
+  const [cityInput, setCityInput] = useState('');
+  const [phoneInput, setPhoneInput] = useState<PhoneInputState>(['', '', '', '']);
+
+  const reset = () => {
+    setFirstNameInput('');
+    setLastNameInput('');
+    setEmailInput('');
+    setCityInput('');
+    setPhoneInput(['', '', '', '']);
+  };
+
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        reset();
+      }}
+    >
       <u>
         <h3>User Information Form</h3>
       </u>
 
-      {/* first name input */}
-      <div className="input-wrap">
-        <label>{"First Name"}:</label>
-        <input placeholder="Bilbo" />
-      </div>
+      <TextInput
+        inputProps={{
+          onChange: (e) => {
+            setFirstNameInput(e.target.value);
+          },
+          value: firstNameInput,
+          placeholder: 'Bilbo',
+        }}
+        labelText='First Name'
+      />
       <ErrorMessage message={firstNameErrorMessage} show={true} />
 
       {/* last name input */}
-      <div className="input-wrap">
-        <label>{"Last Name"}:</label>
-        <input placeholder="Baggins" />
-      </div>
+      <TextInput
+        inputProps={{
+          onChange: (e) => {
+            setLastNameInput(e.target.value);
+          },
+          value: lastNameInput,
+          placeholder: 'Baggins',
+        }}
+        labelText='Last Name'
+      />
       <ErrorMessage message={lastNameErrorMessage} show={true} />
 
       {/* Email Input */}
-      <div className="input-wrap">
-        <label>{"Email"}:</label>
-        <input placeholder="bilbo-baggins@adventurehobbits.net" />
-      </div>
+      <TextInput
+        inputProps={{
+          onChange: (e) => {
+            setEmailInput(e.target.value);
+          },
+          value: emailInput,
+          placeholder: 'bilbo-baggins@adventurehobbits.net',
+        }}
+        labelText='Email'
+      />
       <ErrorMessage message={emailErrorMessage} show={true} />
 
       {/* City Input */}
-      <div className="input-wrap">
-        <label>{"City"}:</label>
-        <input placeholder="Hobbiton" />
-      </div>
+      <TextInput
+        inputProps={{
+          onChange: (e) => {
+            setCityInput(e.target.value);
+          },
+          value: cityInput,
+          placeholder: 'Hobbiton',
+        }}
+        labelText='City'
+      />
       <ErrorMessage message={cityErrorMessage} show={true} />
 
-      <div className="input-wrap">
-        <label htmlFor="phone">Phone:</label>
-        <div id="phone-input-wrap">
-          <input type="text" id="phone-input-1" placeholder="55" />
-          -
-          <input type="text" id="phone-input-2" placeholder="55" />
-          -
-          <input type="text" id="phone-input-3" placeholder="55" />
-          -
-          <input type="text" id="phone-input-4" placeholder="5" />
-        </div>
-      </div>
+      <PhoneInput phoneInputState={phoneInput} setPhoneInputState={setPhoneInput} />
 
       <ErrorMessage message={phoneNumberErrorMessage} show={true} />
 
-      <input type="submit" value="Submit" />
+      <input type='submit' value='Submit' />
     </form>
   );
 };
