@@ -13,9 +13,9 @@ const emailErrorMessage = 'Email is Invalid';
 const cityErrorMessage = 'State is Invalid';
 const phoneErrorMessage = 'Invalid Phone Number';
 
-type ClassFormProps = {
-  setUserData: (userData: UserInformation | null) => void;
-};
+interface ClassFormProps {
+  setUserData: (userData: UserInformation) => void;
+}
 
 type ClassFormState = {
   firstNameInput: string;
