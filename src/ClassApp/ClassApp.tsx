@@ -1,30 +1,30 @@
-import { Component } from "react";
-import { ClassForm } from "./ClassForm";
-import { UserInformation } from "../types";
-import { ProfileInformation } from "../ProfileInformation";
-type State = { userInformation: UserInformation | null };
+import { Component } from 'react';
+import { ProfileInformation } from '../ProfileInformation';
+import { ClassForm } from './ClassForm';
+import { UserInformation } from '../types';
 
-const defaultUser: UserInformation = {
-  email: "default@default.com",
-  firstName: "Default",
-  lastName: "Default",
-  phone: "1234567",
-  city: "Hobbiton",
+type ClassAppState = {
+  userData: UserInformation | null;
 };
 
-export class ClassApp extends Component<Record<string, never>, State> {
+export class ClassApp extends Component<ClassAppState> {
+  constructor(classProps: ClassAppState) {
+    super(classProps);
+    this.state = {
+      userData: null,
+    };
+  }
+
+  setUserData = (userData: UserInformation | null) => {
+    this.setState({ userData });
+  };
+
   render() {
     return (
       <>
-        <h2>Class</h2>
-        <ProfileInformation
-          userData={
-            // toggle the following lines to change
-            // null
-            defaultUser
-          }
-        />
-        <ClassForm />
+        <h2>Class-based</h2>
+        <ProfileInformation userData={this.props.userData} />
+        <ClassForm setUserData={this.setUserData} />
       </>
     );
   }

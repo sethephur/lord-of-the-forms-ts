@@ -1,7 +1,7 @@
 import { ChangeEventHandler, Dispatch, SetStateAction, useRef } from 'react';
 
 export type PhoneInputState = [string, string, string, string];
-export const PhoneInput = ({
+export const FunctionalPhoneInput = ({
   phoneInputState,
   setPhoneInputState,
 }: {

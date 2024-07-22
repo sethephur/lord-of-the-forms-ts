@@ -1,4 +1,4 @@
-import { UserInformation } from "./types";
+import { UserInformation } from './types';
 
 export const InfoRow = ({ label, value }: { label: string; value: string }) => {
   return (
@@ -10,18 +10,15 @@ export const InfoRow = ({ label, value }: { label: string; value: string }) => {
     </div>
   );
 };
-export const ProfileInformation = ({
-  userData,
-}: {
-  userData: UserInformation | null;
-}) => {
+
+export const ProfileInformation = ({ userData }: { userData: UserInformation | null }) => {
   if (!userData) {
     return (
       <>
         <u>
           <h3>Your Submitted User Information</h3>
         </u>
-        <div className="user-info">
+        <div className='user-info'>
           <div>No information provided</div>
         </div>
       </>
@@ -33,13 +30,13 @@ export const ProfileInformation = ({
       <u>
         <h3>Your Submitted User Information</h3>
       </u>
-      <div className="user-info">
-        <InfoRow label="Email" value={email} />
-        <InfoRow label="First Name" value={firstName} />
-        <InfoRow label="Last Name" value={lastName} />
-        <InfoRow label="City" value={city} />
+      <div className='user-info'>
+        <InfoRow label='Email' value={email} />
+        <InfoRow label='First Name' value={firstName} />
+        <InfoRow label='Last Name' value={lastName} />
+        <InfoRow label='City' value={city} />
         {/* You will need to format the string "nnnnnnn" as "nn-nn-nn-n" */}
-        <InfoRow label="Phone" value={"12-34-56-7"} />
+        <InfoRow label='Phone' value={phone} />
       </div>
     </>
   );
