@@ -59,7 +59,14 @@ export const FunctionalForm: React.FC<FunctionalFormProps> = ({ setUserData }) =
       });
       reset();
       setIsSubmitted(false);
+    } else {
+      alert('Bad data input');
     }
+  };
+
+  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^a-zA-Z]/g, '');
+    setter(value);
   };
 
   return (
@@ -70,9 +77,7 @@ export const FunctionalForm: React.FC<FunctionalFormProps> = ({ setUserData }) =
 
       <TextInput
         inputProps={{
-          onChange: (e) => {
-            setFirstNameInput(e.target.value);
-          },
+          onChange: handleInputChange(setFirstNameInput),
           value: firstNameInput,
           placeholder: 'Bilbo',
         }}
@@ -83,9 +88,7 @@ export const FunctionalForm: React.FC<FunctionalFormProps> = ({ setUserData }) =
       {/* last name input */}
       <TextInput
         inputProps={{
-          onChange: (e) => {
-            setLastNameInput(e.target.value);
-          },
+          onChange: handleInputChange(setLastNameInput),
           value: lastNameInput,
           placeholder: 'Baggins',
         }}
@@ -107,16 +110,25 @@ export const FunctionalForm: React.FC<FunctionalFormProps> = ({ setUserData }) =
       <ErrorMessage message={emailErrorMessage} show={shouldShowEmailError} />
 
       {/* City Input */}
-      <TextInput
-        inputProps={{
-          onChange: (e) => {
-            setCityInput(e.target.value);
-          },
-          value: cityInput,
-          placeholder: 'Hobbiton',
-        }}
-        labelText='City'
-      />
+      <div>
+        <TextInput
+          inputProps={{
+            onChange: (e) => {
+              setCityInput(e.target.value);
+            },
+            value: cityInput,
+            placeholder: 'Hobbiton',
+            list: 'cities',
+          }}
+          labelText='City'
+        />
+        <datalist id='cities'>
+          {allCities.map((city, index) => (
+            <option key={index} value={city} />
+          ))}
+        </datalist>
+      </div>
+
       <ErrorMessage message={cityErrorMessage} show={shouldShowCityError} />
 
       <FunctionalPhoneInput phoneInputState={phoneInput} setPhoneInputState={setPhoneInput} />

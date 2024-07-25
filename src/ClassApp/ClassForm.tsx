@@ -102,6 +102,8 @@ export class ClassForm extends Component<ClassFormProps, ClassFormState> {
         });
         this.reset();
         this.setState({ isSubmitted: false });
+      } else {
+        alert('Bad data input');
       }
     });
   };
@@ -120,7 +122,10 @@ export class ClassForm extends Component<ClassFormProps, ClassFormState> {
         <TextInput
           inputProps={{
             onChange: (e) => {
-              this.setState({ firstNameInput: e.target.value });
+              const value = /^[A-Za-z]*$/;
+              if (value.test(e.target.value)) {
+                this.setState({ firstNameInput: e.target.value });
+              }
             },
             value: this.state.firstNameInput,
             placeholder: 'Bilbo',
@@ -132,7 +137,10 @@ export class ClassForm extends Component<ClassFormProps, ClassFormState> {
         <TextInput
           inputProps={{
             onChange: (e) => {
-              this.setState({ lastNameInput: e.target.value });
+              const value = /^[A-Za-z]*$/;
+              if (value.test(e.target.value)) {
+                this.setState({ lastNameInput: e.target.value });
+              }
             },
             value: this.state.lastNameInput,
             placeholder: 'Baggins',
@@ -153,16 +161,25 @@ export class ClassForm extends Component<ClassFormProps, ClassFormState> {
         />
         <ErrorMessage message={emailErrorMessage} show={this.shouldShowEmailError} />
 
-        <TextInput
-          inputProps={{
-            onChange: (e) => {
-              this.setState({ cityInput: e.target.value });
-            },
-            value: this.state.cityInput,
-            placeholder: 'Hobbiton',
-          }}
-          labelText='City'
-        />
+        <div>
+          <TextInput
+            inputProps={{
+              onChange: (e) => {
+                this.setState({ cityInput: e.target.value });
+              },
+              value: this.state.cityInput,
+              placeholder: 'Hobbiton',
+              list: 'cities',
+            }}
+            labelText='City'
+          />
+          <datalist id='cities'>
+            {allCities.map((city, index) => (
+              <option key={index} value={city} />
+            ))}
+          </datalist>
+        </div>
+
         <ErrorMessage message={cityErrorMessage} show={this.shouldShowCityError} />
 
         <ClassPhoneInput phoneInputState={this.state.phoneInput} setPhoneInputState={this.handlePhoneInputChange} />
