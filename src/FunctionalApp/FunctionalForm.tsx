@@ -2,13 +2,13 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { ErrorMessage } from '../ErrorMessage';
 import { TextInput } from '../TextInput';
 import { FunctionalPhoneInput, PhoneInputState } from './FunctionalPhoneInput';
-import { isCityValid, isEmailValid } from '../utils/validations';
+import { isAlphabetical, isCityValid, isEmailValid } from '../utils/validations';
 import { allCities } from '../utils/all-cities';
 import { UserInformation } from '../types';
 import { formatPhoneNumber } from '../utils/transformations';
 
-const firstNameErrorMessage = 'First name must be at least 2 characters long';
-const lastNameErrorMessage = 'Last name must be at least 2 characters long';
+const firstNameErrorMessage = 'First name must be at least 2 characters long and can not include numbers or special characters';
+const lastNameErrorMessage = 'Last name must be at least 2 characters long and can not include numbers or special characters';
 const emailErrorMessage = 'Email is Invalid';
 const cityErrorMessage = 'State is Invalid';
 const phoneErrorMessage = 'Invalid Phone Number';
@@ -25,8 +25,8 @@ export const FunctionalForm: React.FC<FunctionalFormProps> = ({ setUserData }) =
   const [phoneInput, setPhoneInput] = useState<PhoneInputState>(['', '', '', '']);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const isFirstNameInputValid = firstNameInput.length > 2;
-  const isLastNameInputValid = lastNameInput.length > 2;
+  const isFirstNameInputValid = firstNameInput.length > 2 && isAlphabetical(firstNameInput);
+  const isLastNameInputValid = lastNameInput.length > 2 && isAlphabetical(lastNameInput);
   const isEmailInputValid = isEmailValid(emailInput);
   const isCityInputValid = isCityValid(cityInput, allCities);
   const formattedPhoneNumber: string = formatPhoneNumber(phoneInput);
@@ -64,11 +64,6 @@ export const FunctionalForm: React.FC<FunctionalFormProps> = ({ setUserData }) =
     }
   };
 
-  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^a-zA-Z]/g, '');
-    setter(value);
-  };
-
   return (
     <form onSubmit={handleSubmit}>
       <u>
@@ -77,7 +72,9 @@ export const FunctionalForm: React.FC<FunctionalFormProps> = ({ setUserData }) =
 
       <TextInput
         inputProps={{
-          onChange: handleInputChange(setFirstNameInput),
+          onChange: (e) => {
+            setFirstNameInput(e.target.value);
+          },
           value: firstNameInput,
           placeholder: 'Bilbo',
         }}
@@ -88,7 +85,9 @@ export const FunctionalForm: React.FC<FunctionalFormProps> = ({ setUserData }) =
       {/* last name input */}
       <TextInput
         inputProps={{
-          onChange: handleInputChange(setLastNameInput),
+          onChange: (e) => {
+            setLastNameInput(e.target.value);
+          },
           value: lastNameInput,
           placeholder: 'Baggins',
         }}

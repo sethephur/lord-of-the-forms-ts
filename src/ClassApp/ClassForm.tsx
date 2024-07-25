@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { ErrorMessage } from '../ErrorMessage';
 import { TextInput } from '../TextInput';
 import { ClassPhoneInput, PhoneInputState } from './ClassPhoneInput';
-import { isCityValid, isEmailValid } from '../utils/validations';
+import { isAlphabetical, isCityValid, isEmailValid } from '../utils/validations';
 import { allCities } from '../utils/all-cities';
 import { UserInformation } from '../types';
 import { formatPhoneNumber } from '../utils/transformations';
 
-const firstNameErrorMessage = 'First name must be at least 2 characters long';
-const lastNameErrorMessage = 'Last name must be at least 2 characters long';
+const firstNameErrorMessage = 'First name must be at least 2 characters long and can not include numbers or special characters';
+const lastNameErrorMessage = 'Last name must be at least 2 characters long and can not include numbers or special characters';
 const emailErrorMessage = 'Email is Invalid';
 const cityErrorMessage = 'State is Invalid';
 const phoneErrorMessage = 'Invalid Phone Number';
@@ -40,11 +40,11 @@ export class ClassForm extends Component<ClassFormProps, ClassFormState> {
   }
 
   get isFirstNameInputValid(): boolean {
-    return this.state.firstNameInput.length > 2;
+    return this.state.firstNameInput.length > 2 && isAlphabetical(this.state.firstNameInput);
   }
 
   get isLastNameInputValid(): boolean {
-    return this.state.lastNameInput.length > 2;
+    return this.state.lastNameInput.length > 2 && isAlphabetical(this.state.lastNameInput);
   }
 
   get isEmailInputValid(): boolean {
@@ -122,10 +122,7 @@ export class ClassForm extends Component<ClassFormProps, ClassFormState> {
         <TextInput
           inputProps={{
             onChange: (e) => {
-              const value = /^[A-Za-z]*$/;
-              if (value.test(e.target.value)) {
-                this.setState({ firstNameInput: e.target.value });
-              }
+              this.setState({ firstNameInput: e.target.value });
             },
             value: this.state.firstNameInput,
             placeholder: 'Bilbo',
@@ -137,10 +134,7 @@ export class ClassForm extends Component<ClassFormProps, ClassFormState> {
         <TextInput
           inputProps={{
             onChange: (e) => {
-              const value = /^[A-Za-z]*$/;
-              if (value.test(e.target.value)) {
-                this.setState({ lastNameInput: e.target.value });
-              }
+              this.setState({ lastNameInput: e.target.value });
             },
             value: this.state.lastNameInput,
             placeholder: 'Baggins',

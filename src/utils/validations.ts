@@ -7,3 +7,7 @@ export function isEmailValid(emailAddress: string) {
 export const isCityValid = (cityInput: string, allCities: string[]) => {
   return allCities.some((city) => city.toLowerCase() === cityInput.toLowerCase());
 };
+
+export function isAlphabetical(string: string) {
+  return /^[A-Za-z]+$/.test(string);
+}
