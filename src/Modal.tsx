@@ -20,6 +20,11 @@ const Modal = ({ isVisible, onClose, children }: { isVisible: boolean; onClose: 
 
   if (!isVisible) return null;
 
+  const handleSaveButtonClick = () => {
+    handleSaveCard();
+    onClose();
+  };
+
   return (
     <div className='modal-overlay' onClick={onClose}>
       <div className='modal-content' onClick={(e) => e.stopPropagation()}>
@@ -27,7 +32,7 @@ const Modal = ({ isVisible, onClose, children }: { isVisible: boolean; onClose: 
           &times;
         </button>
         {children}
-        <button className='save-button' onClick={handleSaveCard}>
+        <button className='save-button' onClick={handleSaveButtonClick}>
           Save user card
         </button>
       </div>

@@ -44,6 +44,7 @@ export const ProfileInformation = ({ userData }: { userData: UserInformation | n
         <h3>Your Submitted User Information</h3>
       </u>
       <div className='user-info' onClick={handleOpenModal} style={{ cursor: 'pointer' }}>
+        <div className='overlay'>Click to save your card</div>
         <InfoRow label='Email' value={email} />
         <InfoRow label='First Name' value={firstName} />
         <InfoRow label='Last Name' value={lastName} />
